@@ -62,29 +62,30 @@ usart_init:     ; get USARTs base address
                 adc     ZH, r1
 
                 ; configure registers CTRLx
-                ldi     r16, 3                          ; set number of CTRLx registers
+                ldi     r16, 3                  ; set number of CTRLx registers
 
-usart_init_br1: lpm     r17, Z+                         ; read config from flash
-                st      X+, r17                         ; write into CTRLx
+usart_init_br1: lpm     r17, Z+                 ; load configuration from flash
+                st      X+, r17                 ; set CTRLx
 
-                dec     r16                             ; decrease number of registers
-                brne    usart_init_br1                  ; repeat until last register
+                ; check for last register to write
+                dec     r16                     ; decrease number of registers
+                brne    usart_init_br1          ; repeat when not all registers has been set
 
-                ; move address pointer to next register
-                adiw    ZL, 1
+                ; move to next register
+                adiw    ZL, 1                   ; move pointer forward
 
                 ; configure register BAUDL
-                lpm     r16, Z+                         ; read config from flash
-                st      X+, r16                         ; write into BAUDL
+                lpm     r16, Z+                 ; load configuration from flash
+                st      X+, r16                 ; set Baud Low
 
                 ; configure register BAUDH
-                lpm     r16, Z+                         ; read config from flash
-                st      X+, r16                         ; write into BAUDH
+                lpm     r16, Z+                 ; load configuration from flash
+                st      X+, r16                 ; set Baud High
 
                 ; enable transmitter and receiver
-                lds     r16, USART0_CTRLB
+                lds     r16, USART0_CTRLB                           ; get Control B
                 sbr     r16, USART_RX_ENABLED | USART_TX_ENABLED
-                sts     USART0_CTRLB, r16
+                sts     USART0_CTRLB, r16                           ; set Control B
 
                 ret
 
@@ -98,21 +99,47 @@ usart_init_br1: lpm     r17, Z+                         ; read config from flash
 ;
 ; @used     : r16 (changed)
 ;***************************************************************************************************
-usart0_write:       ; wait until current data has been sent
-                    lds     r16, USART0_STATUS              ; read status register
-                    sbrs    r16, USART_DREIF_bp             ; check data register empty interrupt
-                    rjmp    usart0_write                    ; wait until data is empty
+usart0_write:       ; wait until byte has been sent
+                    lds     r16, USART0_STATUS              ; get status
+                    sbrs    r16, USART_DREIF_BIT_NUMBER     ; check data register empty interrupt flag
+                    rjmp    usart0_write                    ; repeat when data register is not empty
 
-                    ; transmit data
-                    ld      r16, X+                         ; read next input byte
-                    sts     USART0_TXDATAL, r16             ; load and trigger transmission
+                    ; send byte
+                    ld      r16, X+                         ; read data byte from input pointer
+                    sts     USART0_TXDATAL, r16             ; write byte and trigger transmission
 
+                    ; check for last byte to send
                     dec     r20                             ; decrease number of bytes to send
-                    brne    usart0_write                    ; repeat until last data to send
+                    brne    usart0_write                    ; repeat when not all bytes has been sent
 
-usart0_write_br1:   ; wait until last data has been sent
-                    lds     r16, USART0_STATUS              ; read status register
-                    sbrs    r16, USART_TXCIF_BIT_NUMBER     ; check transmit complete interrupt
-                    rjmp    usart0_write_br1                ; wait until data is send
+usart0_write_br1:   ; wait until last byte has been sent
+                    lds     r16, USART0_STATUS              ; get status
+                    sbrs    r16, USART_TXCIF_BIT_NUMBER     ; check transmit complete interrupt flag
+                    rjmp    usart0_write_br1                ; repeat when transmit is not completed
+
+                    ret
+
+;***************************************************************************************************
+; @brief    Receives Data Frames
+;
+; @input    : XH:XL : 16-bit - data to receive start pointer
+; @input    : r20   :  8-bit - data to receive length
+;
+; @output   : none
+;
+; @used     : r16 (changed)
+;***************************************************************************************************
+usart0_read:        ; wait until byte has been received
+                    lds     r16, USART0_STATUS          ; get status
+                    sbrs    r16, USART_RXCIF_BIT_NUMBER ; check receive complete interrupt flag
+                    rjmp    usart0_read                 ; repeat when byte is not received
+
+                    ; read received byte
+                    lds     r16, USART0_RXDATAL         ; get data byte
+                    st      X+, r16                     ; store byte at output pointer
+
+                    ; check for last byte to receive
+                    dec     r20                         ; decrease number of bytes to receive
+                    brne    usart0_read                 ; repeat when not all bytes has been received
 
                     ret
