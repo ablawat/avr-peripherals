@@ -1,0 +1,106 @@
+.INCLUDE "usart/define/usart-define.inc"
+
+;**
+;** @brief  Receive Complete Interrupt Enable
+;**
+;** @value  USART_RX_COMPLETE_INTERRUPT_[OPTION]
+;**
+.EQU CONFIG_USART1_RX_COMPLETE_INTERRUPT = USART_RX_COMPLETE_INTERRUPT_DISABLED
+
+;**
+;** @brief  Transmit Complete Interrupt Enable
+;**
+;** @value  USART_TX_COMPLETE_INTERRUPT_[OPTION]
+;**
+.EQU CONFIG_USART1_TX_COMPLETE_INTERRUPT = USART_TX_COMPLETE_INTERRUPT_DISABLED
+
+;**
+;** @brief  Data Register Empty Interrupt Enable
+;**
+;** @value  USART_DATA_REG_EMPTY_INTERRUPT_[OPTION]
+;**
+.EQU CONFIG_USART1_DATA_REG_EMPTY_INTERRUPT = USART_DATA_REG_EMPTY_INTERRUPT_DISABLED
+
+;**
+;** @brief  Receiver Start Frame Interrupt Enable
+;**
+;** @value  USART_RX_START_FRAME_INTERRUPT_[OPTION]
+;**
+.EQU CONFIG_USART1_RX_START_FRAME_INTERRUPT = USART_RX_START_FRAME_INTERRUPT_DISABLED
+
+;**
+;** @brief  Loop-Back Mode Enable
+;**
+;** @value  USART_LOOP_BACK_MODE_[OPTION]
+;**
+.EQU CONFIG_USART1_LOOP_BACK_MODE = USART_LOOP_BACK_MODE_DISABLED
+
+;**
+;** @brief  Auto-Baud Error Interrupt Enable
+;**
+;** @value  USART_AUTO_BAUD_ERROR_INTERRUPT_[OPTION]
+;**
+.EQU CONFIG_USART1_AUTO_BAUD_ERROR_INTERRUPT = USART_AUTO_BAUD_ERROR_INTERRUPT_DISABLED
+
+;**
+;** @brief  Start Frame Detection Enable
+;**
+;** @value  USART_START_FRAME_DETECTION_[OPTION]
+;**
+.EQU CONFIG_USART1_START_FRAME_DETECTION = USART_START_FRAME_DETECTION_DISABLED
+
+;**
+;** @brief  Open Drain Mode Enable
+;**
+;** @value  USART_OPEN_DRAIN_MODE_[OPTION]
+;**
+.EQU CONFIG_USART1_OPEN_DRAIN_MODE = USART_OPEN_DRAIN_MODE_DISABLED
+
+;**
+;** @brief  Receiver Mode
+;**
+;** @value  USART_RX_MODE_[OPTION]
+;**
+.EQU CONFIG_USART1_SPEED_MODE = USART_SPEED_MODE_NORMAL
+
+;**
+;** @brief  Multi-Processor Communication Mode Enable
+;**
+;** @value  USART_MULTI_PROC_COMM_MODE_[OPTION]
+;**
+.EQU CONFIG_USART1_MULTI_PROC_COMM_MODE = USART_MULTI_PROC_COMM_MODE_DISABLED
+
+;**
+;** @brief  Communication Mode
+;**
+;** @value  USART_COMM_MODE_[OPTION]
+;**
+.EQU CONFIG_USART1_COMM_MODE = USART_COMM_MODE_ASYNCHRONOUS
+
+;**
+;** @brief  Parity Mode
+;**
+;** @value  USART_PARITY_MODE_[OPTION]
+;**
+.EQU CONFIG_USART1_PARITY_MODE = USART_PARITY_MODE_NONE
+
+;**
+;** @brief  Stop Bit Mode
+;**
+;** @value  USART_STOP_BIT_MODE_[OPTION]
+;**
+.EQU CONFIG_USART1_STOP_BIT_MODE = USART_STOP_BIT_MODE_1BIT
+
+;**
+;** @brief  Character Size
+;**
+;** @value  USART_CHARACTER_SIZE_[OPTION]
+;**
+.EQU CONFIG_USART1_CHARACTER_SIZE = USART_CHARACTER_SIZE_8BIT
+
+;**
+;** @brief  Baud Rate
+;**
+;** @value  Baud Rate Configuration Options
+;**
+.EQU CONFIG_USART1_BAUD_RATE = 9600

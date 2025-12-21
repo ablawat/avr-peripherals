@@ -87,21 +87,21 @@ usart0_write_br1:   ; wait until last byte has been sent
 ; @input    : XH:XL : 16-bit - data to receive start pointer
 ; @input    : ARG1  :  8-bit - data to receive length
 ;
-; @output   : none
+; @output   : memory from X pointer is written
 ;
-; @used     : r16 (changed)
+; @used     : TEMPL (changed)
 ;**********************************************************************************************;
-usart0_read:        ; wait until byte has been received
-                    lds     TEMPL, USART0_STATUS        ; get status
-                    sbrs    TEMPL, USART_RXCIF_BPOS     ; check receive complete interrupt flag
-                    rjmp    usart0_read                 ; repeat when byte is not received
+usart0_read:    ; wait until byte has been received
+                lds     TEMPL, USART0_STATUS        ; get status
+                sbrs    TEMPL, USART_RXCIF_BPOS     ; check receive complete interrupt flag
+                rjmp    usart0_read                 ; repeat when byte is not received
 
-                    ; read received byte
-                    lds     TEMPL, USART0_RXDATAL       ; get data byte
-                    st      X+, TEMPL                   ; store byte at output pointer
+                ; read received byte
+                lds     TEMPL, USART0_RXDATAL       ; get data byte
+                st      X+, TEMPL                   ; store byte at output pointer
 
-                    ; check for last byte to receive
-                    dec     ARG1                        ; decrease number of bytes to receive
-                    brne    usart0_read                 ; repeat when not all bytes has been received
+                ; check for last byte to receive
+                dec     ARG1                        ; decrease number of bytes to receive
+                brne    usart0_read                 ; repeat when not all bytes has been received
 
-                    ret
+                ret

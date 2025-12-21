@@ -2,20 +2,15 @@
 ; @description : Universal Synchronous and Asynchronous Receiver and Transmitter Peripheral Definition                         ;
 ;******************************************************************************************************************************;
 
+.IFNDEF USART_DEF
+.SET    USART_DEF = 1
+
 ;******************************************************************************************************************************;
 ; @section : Include File                                                                                                      ;
 ;******************************************************************************************************************************;
 
 .INCLUDE "usart/define/usart-register.inc"
-
-;******************************************************************************************************************************;
-; @section : Macro Definition                                                                                                  ;
-;******************************************************************************************************************************;
-
-#define SET_CONFIG_BYTE0(value) ((value) <<  0)
-#define SET_CONFIG_BYTE1(value) ((value) <<  8)
-#define SET_CONFIG_BYTE2(value) ((value) << 16)
-#define SET_CONFIG_BYTE3(value) ((value) << 24)
+.INCLUDE "macro/config.inc"
 
 ;******************************************************************************************************************************;
 ; @section : Configuration Option Definition                                                                                   ;
@@ -93,3 +88,5 @@
 .EQU USART_CHARACTER_SIZE_8BIT      = USART_CTRLC_CHSIZE_8BIT
 .EQU USART_CHARACTER_SIZE_9BIT_LOW  = USART_CTRLC_CHSIZE_9BIT_LOW
 .EQU USART_CHARACTER_SIZE_9BIT_HIGH = USART_CTRLC_CHSIZE_9BIT_HIGH
+
+.ENDIF

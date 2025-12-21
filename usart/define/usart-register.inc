@@ -2,8 +2,11 @@
 ; @description : Universal Synchronous and Asynchronous Receiver and Transmitter Peripheral    ;
 ;**********************************************************************************************;
 
+.IFNDEF USART_REG
+.SET    USART_REG = 1
+
 ; USART Registers Offset
-;.EQU USART_OFFSET = 32
+.EQU USART_OFFSET = 32
 
 ;**********************************************************************************************;
 ; @section : CTRLA - Control A                                                                 ;
@@ -108,3 +111,5 @@
 
 ; STATUS - Data Register Empty Interrupt Flag - Bit Position
 .EQU USART_DREIF_BPOS = USART_DREIF_bp
+
+.ENDIF

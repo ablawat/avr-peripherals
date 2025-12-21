@@ -5,15 +5,6 @@
 .INCLUDE "usart/config/usart0-config.inc"
 
 ;**********************************************************************************************;
-; @section : Macro Definition                                                                  ;
-;**********************************************************************************************;
-
-#define GET_CONFIG_BYTE0(value) (LOW (LWRD(value)))
-#define GET_CONFIG_BYTE1(value) (HIGH(LWRD(value)))
-#define GET_CONFIG_BYTE2(value) (LOW (HWRD(value)))
-#define GET_CONFIG_BYTE3(value) (HIGH(HWRD(value)))
-
-;**********************************************************************************************;
 ; @section : Register Configuration                                                            ;
 ;**********************************************************************************************;
 
@@ -38,7 +29,7 @@
 ; CTRLA - RS485 Mode
 .EQU CONFIG_USART0_CTRLA_RS485 = USART_CTRLA_RS485_OFF
 
-; @brief USART0 Control A Register
+; @brief Control A Register
 .EQU CONFIG_USART0_CTRLA = (CONFIG_USART0_CTRLA_RXCIE << USART_RXCIE_bp) | \
                            (CONFIG_USART0_CTRLA_TXCIE << USART_TXCIE_bp) | \
                            (CONFIG_USART0_CTRLA_DREIE << USART_DREIE_bp) | \
@@ -65,7 +56,7 @@
 ; CTRLB - Multi-Processor Communication Mode Enable
 .EQU CONFIG_USART0_CTRLB_MPCM   = CONFIG_USART0_MULTI_PROC_COMM_MODE
 
-; @brief USART0 Control B Register
+; @brief Control B Register
 .EQU CONFIG_USART0_CTRLB = (CONFIG_USART0_CTRLB_RXEN   << USART_RXEN_bp  ) | \
                            (CONFIG_USART0_CTRLB_TXEN   << USART_TXEN_bp  ) | \
                            (CONFIG_USART0_CTRLB_SFDEN  << USART_SFDEN_bp ) | \
@@ -82,7 +73,7 @@
 ; CTRLC - Character Size
 .EQU CONFIG_USART0_CTRLC_CHSIZE = CONFIG_USART0_CHARACTER_SIZE
 
-; @brief USART0 Control C Register
+; @brief Control C Register
 .EQU CONFIG_USART0_CTRLC = (CONFIG_USART0_CTRLC_CMODE  << USART_CMODE_gp ) | \
                            (CONFIG_USART0_CTRLC_PMODE  << USART_PMODE_gp ) | \
                            (CONFIG_USART0_CTRLC_SBMODE << USART_SBMODE_bp) | \
@@ -90,16 +81,15 @@
 
 ; Define S
 .IF   CONFIG_USART0_SPEED_MODE == USART_SPEED_MODE_NORMAL
-.EQU S = 16
+.EQU USART0_S = 16
 .ELIF CONFIG_USART0_SPEED_MODE == USART_SPEED_MODE_DOUBLE
-.EQU S = 8
+.EQU USART0_S = 8
 .ELSE
-.EQU S = 2
+.EQU USART0_S = 2
 .ENDIF
 
-; @brief USART0 Baud Register
-.EQU CONFIG_USART0_BAUD = (64 * PERIPHERAL_CLOCK_FREQUENCY) / (S * CONFIG_USART0_BAUD_RATE)
+; @brief Baud Register
+.EQU CONFIG_USART0_BAUD = (64 * PERIPHERAL_CLOCK_FREQUENCY) / (USART0_S * CONFIG_USART0_BAUD_RATE)
 
-; @brief USART0 Enable
-.EQU USART_RXTX_ENABLE = (USART_CTRLB_RXEN_ON << USART_RXEN_bp) | \
-                         (USART_CTRLB_TXEN_ON << USART_TXEN_bp)
+; @brief Configuration Marker
+.EQU USART0_CONFIG_DEFINE = 1
