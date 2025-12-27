@@ -8,14 +8,8 @@
 
 .INCLUDE "portmux/define/portmux-register.inc"
 
-;**********************************************************************************************;
-; @section : Macro Definition                                                                  ;
-;**********************************************************************************************;
-
-#define SET_CONFIG_BYTE0(value) ((value) <<  0)
-#define SET_CONFIG_BYTE1(value) ((value) <<  8)
-#define SET_CONFIG_BYTE2(value) ((value) << 16)
-#define SET_CONFIG_BYTE3(value) ((value) << 24)
+.INCLUDE "macro/registers.inc"
+.INCLUDE "macro/config.inc"
 
 ;**********************************************************************************************;
 ; @section : Configuration Option Definition                                                   ;

@@ -5,15 +5,6 @@
 .INCLUDE "portmux/config/portmux-config.inc"
 
 ;**********************************************************************************************;
-; @section : Macro Definition                                                                  ;
-;**********************************************************************************************;
-
-#define GET_CONFIG_BYTE0(value) (LOW (LWRD(value)))
-#define GET_CONFIG_BYTE1(value) (HIGH(LWRD(value)))
-#define GET_CONFIG_BYTE2(value) (LOW (HWRD(value)))
-#define GET_CONFIG_BYTE3(value) (HIGH(HWRD(value)))
-
-;**********************************************************************************************;
 ; @section : Register Configuration                                                            ;
 ;**********************************************************************************************;
 
