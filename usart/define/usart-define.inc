@@ -2,8 +2,8 @@
 ; @description : Universal Synchronous and Asynchronous Receiver and Transmitter Peripheral Definition                         ;
 ;******************************************************************************************************************************;
 
-.IFNDEF USART_DEF
-.SET    USART_DEF = 1
+.IFNDEF USART_DEFINE
+.SET    USART_DEFINE = 1
 
 ;******************************************************************************************************************************;
 ; @section : Include File                                                                                                      ;

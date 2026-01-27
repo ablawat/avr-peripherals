@@ -2,8 +2,8 @@
 ; @description : Universal Synchronous and Asynchronous Receiver and Transmitter Peripheral    ;
 ;**********************************************************************************************;
 
-.IFNDEF USART_REG
-.SET    USART_REG = 1
+.IFNDEF USART_REGISTER
+.SET    USART_REGISTER = 1
 
 ; USART Registers Offset
 .EQU USART_OFFSET = 32
@@ -92,12 +92,12 @@
 .EQU USART_CTRLC_SBMODE_2BIT = 1    ; two stop bits
 
 ; CTRLC - Character Size
-.EQU USART_CTRLC_CHSIZE_5BIT      = 0   ; 5-bit
-.EQU USART_CTRLC_CHSIZE_6BIT      = 1   ; 6-bit
-.EQU USART_CTRLC_CHSIZE_7BIT      = 2   ; 7-bit
-.EQU USART_CTRLC_CHSIZE_8BIT      = 3   ; 8-bit
-.EQU USART_CTRLC_CHSIZE_9BIT_LOW  = 6   ; 9-bit first byte low
-.EQU USART_CTRLC_CHSIZE_9BIT_HIGH = 7   ; 9-bit first byte high
+.EQU USART_CTRLC_CHSIZE_5BIT      = 0   ; 5 bits
+.EQU USART_CTRLC_CHSIZE_6BIT      = 1   ; 6 bits
+.EQU USART_CTRLC_CHSIZE_7BIT      = 2   ; 7 bits
+.EQU USART_CTRLC_CHSIZE_8BIT      = 3   ; 8 bits
+.EQU USART_CTRLC_CHSIZE_9BIT_LOW  = 6   ; 9 bits first byte low
+.EQU USART_CTRLC_CHSIZE_9BIT_HIGH = 7   ; 9 bits first byte high
 
 ;**********************************************************************************************;
 ; @section : STATUS - Status                                                                   ;

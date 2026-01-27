@@ -1,6 +1,12 @@
 ;**********************************************************************************************;
+; @description : Universal Synchronous and Asynchronous Receiver and Transmitter Source        ;
+;**********************************************************************************************;
+
+;**********************************************************************************************;
 ; @section : Constant Data [FLASH]                                                             ;
 ;**********************************************************************************************;
+
+.CSEG
 
 ; clear instance config flags
 .SET USART0_CONFIG_PRESENT = 0
@@ -37,17 +43,17 @@ usart1_config:  .DB CONFIG_USART1_CTRLA, CONFIG_USART1_CTRLB
 .EQU USART0_CONFIG_BPOS = 0
 .EQU USART1_CONFIG_BPOS = 1
 
-; Configuration Instance Map
+; @brief Configuration Instance Map
 .EQU USART_CONFIG_MAP = (USART0_CONFIG_PRESENT << USART0_CONFIG_BPOS) | \
                         (USART1_CONFIG_PRESENT << USART1_CONFIG_BPOS)
 
-; Configuration Base Address
+; @brief Configuration Base Address
 .EQU USART_CONFIG_ADDRESS = (usart_config * 2)
 
-; Configuration Address Offset
+; @brief Configuration Address Offset
 .EQU USART_CONFIG_OFFSET = 6
 
-; @brief USART0 Enable
+; @brief Enable Transmitter and Receiver
 .EQU USART_RXTX_ENABLE = (USART_CTRLB_RXEN_ON << USART_RXEN_bp) | \
                          (USART_CTRLB_TXEN_ON << USART_TXEN_bp)
 
@@ -55,13 +61,15 @@ usart1_config:  .DB CONFIG_USART1_CTRLA, CONFIG_USART1_CTRLB
 ; @section : Code [FLASH]                                                                      ;
 ;**********************************************************************************************;
 
+.CSEG
+
 ;**********************************************************************************************;
-; @brief    Initializes Peripheral Registers
+; @brief    : Initializes Peripheral Registers
 ;
 ; @input    : ARG1  :  2-bit - [USART0, USART1]
 ; @output   : none
 ;
-; @used     : ZH:ZL (changed), XH:XL (changed), TEMPH (changed), TEMPL (changed)
+; @use      : ZH:ZL, YH:YL, TEMPH, TEMPL
 ;**********************************************************************************************;
 usart_init:     ; get selected instance base address
                 rcall   usart_base_addr
@@ -76,8 +84,8 @@ usart_init:     ; get selected instance base address
                 ; get configuration map
                 ldi     TEMPL, USART_CONFIG_MAP         ; get instance config flags
 
-                ; check for last configuration
-usart_init_br1: cpi     ARG1, 0                         ; check instance number
+usart_init_br1: ; check for last configuration
+                cpi     ARG1, 0                         ; check instance number
                 breq    usart_init_br3                  ; finish when instance is first
 
                 ; check instance bit inside map
@@ -87,15 +95,16 @@ usart_init_br1: cpi     ARG1, 0                         ; check instance number
                 ; set pointer at next configuration instance
                 adiw    ZL, USART_CONFIG_OFFSET         ; move address one instance forward
 
-                ; move to next configuration
-usart_init_br2: dec     ARG1                            ; decrease instance number
+usart_init_br2: ; move to next configuration
+                dec     ARG1                            ; decrease instance number
                 rjmp    usart_init_br1                  ; repeat for lower instance
 
-                ; configure registers CTRLx
-usart_init_br3: ldi     TEMPL, 3                        ; set number of CTRLx registers
+usart_init_br3: ; prepare for registers configuration
+                ldi     TEMPL, 3                        ; set number of CTRLx registers
 
-usart_init_br4: lpm     TEMPH, Z+                       ; load configuration from flash
-                st      Y+, TEMPH                       ; set CTRLx
+usart_init_br4: ; configure register CTRLx
+                lpm     TEMPH, Z+                       ; load configuration from flash
+                st      Y+, TEMPH                       ; write into register
 
                 ; check for last register to write
                 dec     TEMPL                           ; decrease number of registers
@@ -106,21 +115,21 @@ usart_init_br4: lpm     TEMPH, Z+                       ; load configuration fro
 
                 ; configure register BAUDL
                 lpm     TEMPL, Z+                       ; load configuration from flash
-                st      Y+, TEMPL                       ; set Baud Low
+                st      Y+, TEMPL                       ; write into register
 
                 ; configure register BAUDH
                 lpm     TEMPL, Z+                       ; load configuration from flash
-                st      Y+, TEMPL                       ; set Baud High
+                st      Y+, TEMPL                       ; write into register
 
                 ret
 
 ;**********************************************************************************************;
-; @brief    Enables Transmitter and Receiver
+; @brief    : Enables Transmitter and Receiver
 ;
 ; @input    : ARG1  :  2-bit - [USART0, USART1]
 ; @output   : none
 ;
-; @used     : YH:YL (changed), TEMPL (changed)
+; @use      : YH:YL, TEMPL
 ;**********************************************************************************************;
 usart_enable:   ; get selected instance base address
                 rcall   usart_base_addr
@@ -130,21 +139,21 @@ usart_enable:   ; get selected instance base address
 
                 ; enable transmitter and receiver
                 ld      TEMPL, Y                    ; get control B register
-                sbr     TEMPL, USART_RXTX_ENABLE
+                sbr     TEMPL, USART_RXTX_ENABLE    ; enable
                 st      Y, TEMPL                    ; set control B register
 
                 ret
 
 ;**********************************************************************************************;
-; @brief    Sends Data Frames
+; @brief    : Sends Data Bytes
 ;
 ; @input    : ARG1  :  2-bit - [USART0, USART1]
-; @input    : ARG2  :  8-bit - data to send length
-; @input    : XH:XL : 16-bit - data to send start pointer
+; @input    : ARG2  :  8-bit - a length of data to send
+; @input    : XH:XL : 16-bit - a start pointer of data to send
 ;
 ; @output   : none
 ;
-; @used     : YH:YL (changed), TEMPL (changed)
+; @use      : YH:YL, TEMPL
 ;**********************************************************************************************;
 usart_write:        ; get selected instance base address
                     rcall   usart_base_addr
@@ -179,15 +188,15 @@ usart_write_br2:    ; wait until last byte has been sent
                     ret
 
 ;**********************************************************************************************;
-; @brief    Receives Data Frames
+; @brief    : Receives Data Bytes
 ;
 ; @input    : ARG1  :  2-bit - [USART0, USART1]
-; @input    : ARG2  :  8-bit - data to receive length
-; @input    : XH:XL : 16-bit - data to receive start pointer
+; @input    : ARG2  :  8-bit - a length of data to receive
+; @input    : XH:XL : 16-bit - a start pointer of data to receive
 ;
 ; @output   : memory from X pointer is written
 ;
-; @used     : YH:YL (changed), TEMPL (changed)
+; @use      : YH:YL, TEMPL
 ;**********************************************************************************************;
 usart_read:         ; get selected instance base address
                     rcall   usart_base_addr
@@ -217,12 +226,12 @@ usart_read_br1:     ; wait until byte has been received
                     ret
 
 ;**********************************************************************************************;
-; @brief    Calculates Instance Base Address
+; @brief    : Calculates Instance Base Address
 ;
 ; @input    : ARG1  :  2-bit - [USART0, USART1]
 ; @output   : YH:YL : 16-bit - USART base address
 ;
-; @used     : TEMPL (changed), r1 (changed), r0 (changed)
+; @use      : TEMPL, r1, r0
 ;**********************************************************************************************;
 usart_base_addr:    ; get first instance base address
                     ldi     YH, HIGH (USART0_RXDATAL)

@@ -1,14 +1,20 @@
 ;**********************************************************************************************;
-; @section : Code [FLASH]                                                                      ;
+; @description : Universal Synchronous and Asynchronous Receiver and Transmitter 0 Source      ;
 ;**********************************************************************************************;
 
 ;**********************************************************************************************;
-; @brief    Initializes USART0 Peripheral
+; @section : Code [FLASH]                                                                      ;
+;**********************************************************************************************;
+
+.CSEG
+
+;**********************************************************************************************;
+; @brief    : Initializes Peripheral Registers
 ;
 ; @input    : none
 ; @output   : none
 ;
-; @used     : XH:XL (changed), TEMPL (changed)
+; @use      : XH:XL, TEMPL
 ;**********************************************************************************************;
 usart0_init:    ; get USART0 base address
                 ldi     XH, HIGH (USART0_CTRLA)
@@ -37,29 +43,29 @@ usart0_init:    ; get USART0 base address
                 ret
 
 ;**********************************************************************************************;
-; @brief    Enables USART0 Transmitter and Receiver
+; @brief    : Enables Transmitter and Receiver
 ;
 ; @input    : none
 ; @output   : none
 ;
-; @used     : TEMPL (changed)
+; @use      : TEMPL
 ;**********************************************************************************************;
 usart0_enable:  ; enable transmitter and receiver
                 lds     TEMPL, USART0_CTRLB         ; get Control B
-                sbr     TEMPL, USART_RXTX_ENABLE
+                sbr     TEMPL, USART_RXTX_ENABLE    ; enable
                 sts     USART0_CTRLB, TEMPL         ; set Control B
 
                 ret
 
 ;**********************************************************************************************;
-; @brief    Sends Data Frames
+; @brief    : Sends Data Bytes
 ;
-; @input    : XH:XL : 16-bit - data to send start pointer
-; @input    : ARG1  :  8-bit - data to send length
+; @input    : XH:XL : 16-bit - a start pointer of data to send
+; @input    : ARG1  :  8-bit - a length of data to send
 ;
 ; @output   : none
 ;
-; @used     : TEMPL (changed)
+; @use      : TEMPL
 ;**********************************************************************************************;
 usart0_write:       ; wait until byte has been sent
                     lds     TEMPL, USART0_STATUS        ; get status
@@ -82,14 +88,14 @@ usart0_write_br1:   ; wait until last byte has been sent
                     ret
 
 ;**********************************************************************************************;
-; @brief    Receives Data Frames
+; @brief    : Receives Data Bytes
 ;
-; @input    : XH:XL : 16-bit - data to receive start pointer
-; @input    : ARG1  :  8-bit - data to receive length
+; @input    : XH:XL : 16-bit - a start pointer of data to receive
+; @input    : ARG1  :  8-bit - a length of data to receive
 ;
 ; @output   : memory from X pointer is written
 ;
-; @used     : TEMPL (changed)
+; @use      : TEMPL
 ;**********************************************************************************************;
 usart0_read:    ; wait until byte has been received
                 lds     TEMPL, USART0_STATUS        ; get status
