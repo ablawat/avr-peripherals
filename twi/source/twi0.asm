@@ -189,3 +189,46 @@ twi0_read_br3:  ; check for bus state
                 brne    twi0_read_br3                       ; repeat when bus is not idle
 
 twi0_read_br4:  ret
+
+;**********************************************************************************************;
+; @brief    : Checks Client Device Response
+;
+; @input    : ARG2  :  7-bit - an address of client device
+;
+; @output   : none
+;
+; @use      : TEMPH:TEMPL
+;**********************************************************************************************;
+twi0_check:     ; send control byte
+                cbr     ARG2, 0x01                          ; set direction bit to write
+                sts     TWI0_MADDR, ARG2                    ; send start condition + client address + write
+
+twi0_check_br1: ; wait until byte has been sent
+                lds     TEMPL, TWI0_MSTATUS                 ; get host status
+                sbrs    TEMPL, TWI_MSTATUS_WIF_BPOS         ; check write complete interrupt flag
+                rjmp    twi0_check_br1                      ; repeat when write is not completed
+
+                ; check client device response
+                sbrs    TEMPL, TWI_MSTATUS_RXACK_BPOS       ; check received acknowledge flag
+                rjmp    twi0_check_br2                      ; when client has acknowledged
+
+                ; not acknowledge was received
+                ldi     TEMPL, 0x00                         ; set failure flag
+                rjmp    twi0_check_br3                      ; go to end
+
+twi0_check_br2: ; acknowledge was received
+                ldi     TEMPL, 0x01                         ; set success flag
+
+twi0_check_br3: ; send stop condition
+                ldi     TEMPH, TWI_COMMAND_ACK_STOP         ; set stop condition command
+                sts     TWI0_MCTRLB, TEMPH                  ; send stop condition
+
+twi0_check_br4: ; check for bus state
+                lds     TEMPH, TWI0_MSTATUS                 ; get host status
+                cbr     TEMPH, TWI_MSTATUS_BUSSTATE_BMASK   ; get bus state
+
+                ; wait until bus state is idle
+                cpi     TEMPH, TWI_STATUS_IDLE              ; check for idle state
+                brne    twi0_check_br4                      ; repeat when bus is not idle
+
+                ret

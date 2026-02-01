@@ -86,6 +86,9 @@
 ; MSTATUS - Clock Hold - Bit Position
 .EQU TWI_MSTATUS_CLKHOLD_BPOS = TWI_CLKHOLD_bp
 
+; MSTATUS - Received Acknowledge - Bit Position
+.EQU TWI_MSTATUS_RXACK_BPOS = TWI_RXACK_bp
+
 ; MSTATUS - Bus State - Bit Mask
 .EQU TWI_MSTATUS_BUSSTATE_BMASK = ~TWI_BUSSTATE_gm
 
