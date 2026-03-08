@@ -77,27 +77,27 @@
 ;**********************************************************************************************;
 
 ; CTRLC - Communication Mode
-.EQU USART_CTRLC_CMODE_ASYNC = 0    ; USART asynchronous
-.EQU USART_CTRLC_CMODE_SYNC  = 1    ; USART synchronous
-.EQU USART_CTRLC_CMODE_IR    = 2    ; infrared communication
-.EQU USART_CTRLC_CMODE_SPI   = 3    ; SPI host
+.EQU USART_CTRLC_CMODE_ASYNC = 0 ; USART asynchronous
+.EQU USART_CTRLC_CMODE_SYNC  = 1 ; USART synchronous
+.EQU USART_CTRLC_CMODE_IR    = 2 ; infrared communication
+.EQU USART_CTRLC_CMODE_SPI   = 3 ; SPI host
 
 ; CTRLC - Parity Mode
-.EQU USART_CTRLC_PMODE_NONE = 0     ; disabled
-.EQU USART_CTRLC_PMODE_EVEN = 2     ; parity even
-.EQU USART_CTRLC_PMODE_ODD  = 3     ; parity odd
+.EQU USART_CTRLC_PMODE_NONE = 0 ; disabled
+.EQU USART_CTRLC_PMODE_EVEN = 2 ; parity even
+.EQU USART_CTRLC_PMODE_ODD  = 3 ; parity odd
 
 ; CTRLC - Stop Bit Mode
-.EQU USART_CTRLC_SBMODE_1BIT = 0    ; one stop bit
-.EQU USART_CTRLC_SBMODE_2BIT = 1    ; two stop bits
+.EQU USART_CTRLC_SBMODE_1BIT = 0 ; one stop bit
+.EQU USART_CTRLC_SBMODE_2BIT = 1 ; two stop bits
 
 ; CTRLC - Character Size
-.EQU USART_CTRLC_CHSIZE_5BIT      = 0   ; 5 bits
-.EQU USART_CTRLC_CHSIZE_6BIT      = 1   ; 6 bits
-.EQU USART_CTRLC_CHSIZE_7BIT      = 2   ; 7 bits
-.EQU USART_CTRLC_CHSIZE_8BIT      = 3   ; 8 bits
-.EQU USART_CTRLC_CHSIZE_9BIT_LOW  = 6   ; 9 bits first byte low
-.EQU USART_CTRLC_CHSIZE_9BIT_HIGH = 7   ; 9 bits first byte high
+.EQU USART_CTRLC_CHSIZE_5BIT      = 0 ; 5 bits
+.EQU USART_CTRLC_CHSIZE_6BIT      = 1 ; 6 bits
+.EQU USART_CTRLC_CHSIZE_7BIT      = 2 ; 7 bits
+.EQU USART_CTRLC_CHSIZE_8BIT      = 3 ; 8 bits
+.EQU USART_CTRLC_CHSIZE_9BIT_LOW  = 6 ; 9 bits first byte low
+.EQU USART_CTRLC_CHSIZE_9BIT_HIGH = 7 ; 9 bits first byte high
 
 ;**********************************************************************************************;
 ; @section : STATUS - Status                                                                   ;

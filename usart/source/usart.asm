@@ -66,10 +66,10 @@ usart1_config:  .DB CONFIG_USART1_CTRLA, CONFIG_USART1_CTRLB
 ;**********************************************************************************************;
 ; @brief    : Initializes Peripheral Registers
 ;
-; @input    : ARG1  :  2-bit - [USART0, USART1]
-; @output   : none
+; @param    : ARG1  :  2-bit - [USART0, USART1]
+; @return   : none
 ;
-; @use      : ZH:ZL, YH:YL, TEMPH, TEMPL
+; @use      : ZH:ZL YH:YL TEMPH:TEMPL
 ;**********************************************************************************************;
 usart_init:     ; get selected instance base address
                 rcall   usart_base_addr
@@ -126,10 +126,10 @@ usart_init_br4: ; configure register CTRLx
 ;**********************************************************************************************;
 ; @brief    : Enables Transmitter and Receiver
 ;
-; @input    : ARG1  :  2-bit - [USART0, USART1]
-; @output   : none
+; @param    : ARG1  :  2-bit - [USART0, USART1]
+; @return   : none
 ;
-; @use      : YH:YL, TEMPL
+; @use      : YH:YL TEMPL
 ;**********************************************************************************************;
 usart_enable:   ; get selected instance base address
                 rcall   usart_base_addr
@@ -147,13 +147,13 @@ usart_enable:   ; get selected instance base address
 ;**********************************************************************************************;
 ; @brief    : Sends Data Bytes
 ;
-; @input    : ARG1  :  2-bit - [USART0, USART1]
-; @input    : ARG2  :  8-bit - a length of data to send
-; @input    : XH:XL : 16-bit - a start pointer of data to send
+; @param    : ARG1  :  2-bit - [USART0, USART1]
+; @param    : ARG2  :  8-bit - a length of data to send
+; @param    : XH:XL : 16-bit - a start pointer of data to send
 ;
-; @output   : none
+; @return   : none
 ;
-; @use      : YH:YL, TEMPL
+; @use      : YH:YL TEMPL
 ;**********************************************************************************************;
 usart_write:        ; get selected instance base address
                     rcall   usart_base_addr
@@ -190,13 +190,13 @@ usart_write_br2:    ; wait until last byte has been sent
 ;**********************************************************************************************;
 ; @brief    : Receives Data Bytes
 ;
-; @input    : ARG1  :  2-bit - [USART0, USART1]
-; @input    : ARG2  :  8-bit - a length of data to receive
-; @input    : XH:XL : 16-bit - a start pointer of data to receive
+; @param    : ARG1  :  2-bit - [USART0, USART1]
+; @param    : ARG2  :  8-bit - a length of data to receive
+; @param    : XH:XL : 16-bit - a start pointer of data to receive
 ;
-; @output   : memory from X pointer is written
+; @return   : DS(X) : memory of length ARG2
 ;
-; @use      : YH:YL, TEMPL
+; @use      : YH:YL TEMPL
 ;**********************************************************************************************;
 usart_read:         ; get selected instance base address
                     rcall   usart_base_addr
@@ -228,10 +228,10 @@ usart_read_br1:     ; wait until byte has been received
 ;**********************************************************************************************;
 ; @brief    : Calculates Instance Base Address
 ;
-; @input    : ARG1  :  2-bit - [USART0, USART1]
-; @output   : YH:YL : 16-bit - USART base address
+; @param    : ARG1  :  2-bit - [USART0, USART1]
+; @return   : YH:YL : 16-bit - USART base address
 ;
-; @use      : TEMPL, r1, r0
+; @use      : TEMPL r1 r0
 ;**********************************************************************************************;
 usart_base_addr:    ; get first instance base address
                     ldi     YH, HIGH (USART0_RXDATAL)

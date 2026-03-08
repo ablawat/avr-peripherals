@@ -11,10 +11,10 @@
 ;**********************************************************************************************;
 ; @brief    : Initializes Peripheral Registers
 ;
-; @input    : none
-; @output   : none
+; @param    : none
+; @return   : none
 ;
-; @use      : XH:XL, TEMPL
+; @use      : XH:XL TEMPL
 ;**********************************************************************************************;
 usart0_init:    ; get USART0 base address
                 ldi     XH, HIGH (USART0_CTRLA)
@@ -45,8 +45,8 @@ usart0_init:    ; get USART0 base address
 ;**********************************************************************************************;
 ; @brief    : Enables Transmitter and Receiver
 ;
-; @input    : none
-; @output   : none
+; @param    : none
+; @return   : none
 ;
 ; @use      : TEMPL
 ;**********************************************************************************************;
@@ -60,10 +60,10 @@ usart0_enable:  ; enable transmitter and receiver
 ;**********************************************************************************************;
 ; @brief    : Sends Data Bytes
 ;
-; @input    : XH:XL : 16-bit - a start pointer of data to send
-; @input    : ARG1  :  8-bit - a length of data to send
+; @param    : XH:XL : 16-bit - a start pointer of data to send
+; @param    : ARG1  :  8-bit - a length of data to send
 ;
-; @output   : none
+; @return   : none
 ;
 ; @use      : TEMPL
 ;**********************************************************************************************;
@@ -90,10 +90,10 @@ usart0_write_br1:   ; wait until last byte has been sent
 ;**********************************************************************************************;
 ; @brief    : Receives Data Bytes
 ;
-; @input    : XH:XL : 16-bit - a start pointer of data to receive
-; @input    : ARG1  :  8-bit - a length of data to receive
+; @param    : XH:XL : 16-bit - a start pointer of data to receive
+; @param    : ARG1  :  8-bit - a length of data to receive
 ;
-; @output   : memory from X pointer is written
+; @return   : DS(X) : memory of length ARG1
 ;
 ; @use      : TEMPL
 ;**********************************************************************************************;
