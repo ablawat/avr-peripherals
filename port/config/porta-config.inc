@@ -1,4 +1,4 @@
-.INCLUDE "port/port-def.inc"
+.INCLUDE "port/define/port-define.inc"
 
 ;**
 ;** @brief  Pin 0 Data Direction
@@ -87,3 +87,10 @@
 .EQU CONFIG_PORTA_PIN7_POLARITY_INVERSION = PORT_PIN_POLARITY_INVERSION_DISABLED
 .EQU CONFIG_PORTA_PIN7_PULLUP             = PORT_PIN_PULLUP_DISABLED
 .EQU CONFIG_PORTA_PIN7_INPUT_BUFFER       = PORT_PIN_INPUT_BUFFER_ENABLED_INTERRUPT_DISABLED
+
+;**
+;** @brief  PORTA - Interrupt Service Routine
+;**
+;** @value  PORT_ISR_NONE or label
+;**
+.EQU CONFIG_PORTA_ISR = PORT_ISR_NONE
