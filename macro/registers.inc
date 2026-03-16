@@ -2,8 +2,8 @@
 ; @section : Register Definition                               ;
 ;**************************************************************;
 
-.IFNDEF REGISTERS
-.SET    REGISTERS = 1
+.IFNDEF MACRO_REGISTERS
+.SET    MACRO_REGISTERS = 1
 
 .DEF BUFFL = r14
 .DEF BUFFH = r15
