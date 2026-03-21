@@ -1,4 +1,4 @@
-.INCLUDE "evsys/define/evsys-define.inc"
+.INCLUDE "peripheral/evsys/define/evsys-define.inc"
 
 ;**
 ;** @brief  Event System - Asynchronous Channel 0 Generator Selection

@@ -1,4 +1,4 @@
-.INCLUDE "clkctrl/define/clkctrl-define.inc"
+.INCLUDE "peripheral/clkctrl/define/clkctrl-define.inc"
 
 ;**
 ;** @brief  Clock Controller - System Clock Out

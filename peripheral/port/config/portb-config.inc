@@ -1,4 +1,4 @@
-.INCLUDE "port/define/port-define.inc"
+.INCLUDE "peripheral/port/define/port-define.inc"
 
 ;**
 ;** @brief  Pin 0 Data Direction

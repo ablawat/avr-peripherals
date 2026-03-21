@@ -6,7 +6,7 @@
 ; @section : Include File                                                                      ;
 ;**********************************************************************************************;
 
-.INCLUDE "portmux/config/portmux-config.inc"
+.INCLUDE "peripheral/portmux/config/portmux-config.inc"
 
 ;**********************************************************************************************;
 ; @section : Register Configuration                                                            ;

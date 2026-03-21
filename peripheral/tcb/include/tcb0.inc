@@ -6,7 +6,7 @@
 ; @section : Include File                                                                      ;
 ;**********************************************************************************************;
 
-.INCLUDE "tcb/config/tcb0-config.inc"
+.INCLUDE "peripheral/tcb/config/tcb0-config.inc"
 
 ;**********************************************************************************************;
 ; @section : Register Configuration                                                            ;

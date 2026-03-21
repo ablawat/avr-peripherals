@@ -1,4 +1,4 @@
-.INCLUDE "usart/define/usart-define.inc"
+.INCLUDE "peripheral/usart/define/usart-define.inc"
 
 ;**
 ;** @brief  Receive Complete Interrupt Enable

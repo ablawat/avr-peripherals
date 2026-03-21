@@ -9,7 +9,7 @@
 ; @section : Include File                                                                                                      ;
 ;******************************************************************************************************************************;
 
-.INCLUDE "tcb/define/tcb-register.inc"
+.INCLUDE "peripheral/tcb/define/tcb-register.inc"
 
 .INCLUDE "macro/registers.inc"
 .INCLUDE "macro/config.inc"

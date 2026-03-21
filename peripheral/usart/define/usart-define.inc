@@ -9,7 +9,7 @@
 ; @section : Include File                                                                                                      ;
 ;******************************************************************************************************************************;
 
-.INCLUDE "usart/define/usart-register.inc"
+.INCLUDE "peripheral/usart/define/usart-register.inc"
 
 .INCLUDE "macro/registers.inc"
 .INCLUDE "macro/config.inc"

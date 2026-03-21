@@ -6,7 +6,7 @@
 ; @section : Include File                                                                      ;
 ;**********************************************************************************************;
 
-.INCLUDE "clkctrl/define/clkctrl-register.inc"
+.INCLUDE "peripheral/clkctrl/define/clkctrl-register.inc"
 
 .INCLUDE "macro/registers.inc"
 .INCLUDE "macro/config.inc"

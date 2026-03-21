@@ -6,7 +6,7 @@
 ; @section : Include File                                                                      ;
 ;**********************************************************************************************;
 
-.INCLUDE "port/config/portb-config.inc"
+.INCLUDE "peripheral/port/config/portb-config.inc"
 
 ;**********************************************************************************************;
 ; @section : Register Configuration                                                            ;

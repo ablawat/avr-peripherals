@@ -1,4 +1,4 @@
-.INCLUDE "tcb/define/tcb-define.inc"
+.INCLUDE "peripheral/tcb/define/tcb-define.inc"
 
 ;**
 ;** @brief  Timer/Counter B - Run in Standby

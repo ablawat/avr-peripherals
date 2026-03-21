@@ -1,4 +1,4 @@
-.INCLUDE "portmux/define/portmux-define.inc"
+.INCLUDE "peripheral/portmux/define/portmux-define.inc"
 
 ;**
 ;** @brief  CCL LUT 1 Output

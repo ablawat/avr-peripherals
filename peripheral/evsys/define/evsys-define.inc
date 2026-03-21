@@ -9,7 +9,7 @@
 ; @section : Include File                                                                      ;
 ;**********************************************************************************************;
 
-.INCLUDE "evsys/define/evsys-register.inc"
+.INCLUDE "peripheral/evsys/define/evsys-register.inc"
 
 .INCLUDE "macro/registers.inc"
 .INCLUDE "macro/config.inc"

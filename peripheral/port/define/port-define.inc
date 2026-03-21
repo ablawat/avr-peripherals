@@ -9,7 +9,7 @@
 ; @section : Include File                                                                      ;
 ;**********************************************************************************************;
 
-.INCLUDE "port/define/port-register.inc"
+.INCLUDE "peripheral/port/define/port-register.inc"
 
 .INCLUDE "macro/registers.inc"
 .INCLUDE "macro/config.inc"
