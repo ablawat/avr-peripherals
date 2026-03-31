@@ -6,7 +6,7 @@
 ; @section : Include File                                                                      ;
 ;**********************************************************************************************;
 
-.INCLUDE "peripheral/usart/config/usart1-config.inc"
+.INCLUDE "config/usart/usart1-config.inc"
 
 ;**********************************************************************************************;
 ; @section : Register Configuration                                                            ;

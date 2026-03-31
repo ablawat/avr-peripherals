@@ -6,7 +6,7 @@
 ; @section : Include File                                                                      ;
 ;**********************************************************************************************;
 
-.INCLUDE "peripheral/clkctrl/config/clkctrl-config.inc"
+.INCLUDE "config/clkctrl/clkctrl-config.inc"
 
 ;**********************************************************************************************;
 ; @section : Register Configuration                                                            ;

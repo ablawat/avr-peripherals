@@ -6,7 +6,7 @@
 ; @section : Include File                                                                      ;
 ;**********************************************************************************************;
 
-.INCLUDE "peripheral/evsys/config/evsys-config.inc"
+.INCLUDE "config/evsys/evsys-config.inc"
 
 ;**********************************************************************************************;
 ; @section : Register Configuration                                                            ;
