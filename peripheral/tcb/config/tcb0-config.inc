@@ -40,7 +40,7 @@
 ;**
 ;** @value  TCB_MODE_[OPTION]
 ;**
-.EQU CONFIG_TCB0_MODE = TCB_MODE_MEASURE_PULSE_WIDTH_HIGH
+.EQU CONFIG_TCB0_MODE = TCB_MODE_PERIODIC_INTERRUPT
 
 ;**
 ;** @brief  Timer/Counter B - Capture Interrupt Enable
