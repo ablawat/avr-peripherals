@@ -36,30 +36,30 @@
 ;**********************************************************************************************;
 ; @brief    : Initializes TWI0 Peripheral
 ;
-; @input    : none
-; @output   : none
+; @param    : none
+; @return   : none
 ;
-; @use      : XH:XL, TEMPL
+; @use      : XH:XL TEMPL
 ;**********************************************************************************************;
 twi0_init:  ; get TWI0 base address
             ldi     XH, HIGH (TWI0_base)
             ldi     XL, LOW  (TWI0_base)
 
-            ; configure register CTRLA
+            ; configure register Control A
             ldi     TEMPL, CONFIG_TWI0_CTRLA    ; get config constant
             st      X, TEMPL                    ; write into register
 
             ; skip three registers
             adiw    XL, 3                       ; move pointer forward
 
-            ; configure register MCTRLA
+            ; configure register Host Control A
             ldi     TEMPL, CONFIG_TWI0_MCTRLA   ; get config constant
             st      X, TEMPL                    ; write into register
 
             ; skip three registers
             adiw    XL, 3                       ; move pointer forward
 
-            ; configure register MBAUD
+            ; configure register Host Baud Rate
             ldi     TEMPL, CONFIG_TWI0_MBAUD    ; get config constant
             st      X, TEMPL                    ; write into register
 
@@ -68,8 +68,8 @@ twi0_init:  ; get TWI0 base address
 ;**********************************************************************************************;
 ; @brief    : Enables Host
 ;
-; @input    : none
-; @output   : none
+; @param    : none
+; @return   : none
 ;
 ; @use      : TEMPL
 ;**********************************************************************************************;
@@ -87,12 +87,12 @@ twi0_enable:    ; enable host
 ;**********************************************************************************************;
 ; @brief    : Sends Data Bytes
 ;
-; @input    : XH:XL : 16-bit - a start pointer of data to send
-; @input    : ARG1  :  8-bit - a length of data to send
-; @input    : ARG2  :  7-bit - an address of client device
-; @input    : ARG3  :  1-bit - stop or repeat
+; @param    : XH:XL : 16-bit - a start pointer of data to send
+; @param    : ARG1  :  8-bit - a length of data to send
+; @param    : ARG2  :  7-bit - an address of client device
+; @param    : ARG3  :  1-bit - stop or repeat
 ;
-; @output   : none
+; @return   : none
 ;
 ; @use      : TEMPL
 ;**********************************************************************************************;
@@ -139,12 +139,12 @@ twi0_write_br5: ret
 ;**********************************************************************************************;
 ; @brief    : Receives Data Bytes
 ;
-; @input    : XH:XL : 16-bit - a start pointer of data to receive
-; @input    : ARG1  :  8-bit - a length of data to receive
-; @input    : ARG2  :  7-bit - an address of client device
-; @input    : ARG3  :  1-bit - stop or repeat
+; @param    : XH:XL : 16-bit - a start pointer of data to receive
+; @param    : ARG1  :  8-bit - a length of data to receive
+; @param    : ARG2  :  7-bit - an address of client device
+; @param    : ARG3  :  1-bit - stop or repeat
 ;
-; @output   : XH:XL : 16-bit - data to receive start pointer
+; @return   : DS(X) : memory of length ARG1
 ;
 ; @use      : TEMPL
 ;**********************************************************************************************;
@@ -193,11 +193,11 @@ twi0_read_br4:  ret
 ;**********************************************************************************************;
 ; @brief    : Checks Client Device Response
 ;
-; @input    : ARG2  :  7-bit - an address of client device
+; @param    : ARG2 : 7-bit - an address of client device
 ;
-; @output   : none
+; @return   : TEMPL
 ;
-; @use      : TEMPH:TEMPL
+; @use      : TEMPH
 ;**********************************************************************************************;
 twi0_check:     ; send control byte
                 cbr     ARG2, 0x01                          ; set direction bit to write

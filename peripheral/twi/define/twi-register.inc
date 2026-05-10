@@ -13,8 +13,11 @@
 ;**********************************************************************************************;
 
 ; CTRLA - SDA Setup Time
-.EQU TWI_CTRLA_SDASETUP_CYC4 = 0    ; 4 cycles
-.EQU TWI_CTRLA_SDASETUP_CYC8 = 1    ; 8 cycles
+.EQU TWI_CTRLA_SDASETUP_CYC4 = 0 ; 4 cycles
+.EQU TWI_CTRLA_SDASETUP_CYC8 = 1 ; 8 cycles
+
+; CTRLA - SDA Setup Time - Bit Position
+.EQU TWI_CTRLA_SDASETUP_BPOS = TWI_SDASETUP_bp
 
 ; CTRLA - SDA Hold Time
 .EQU TWI_CTRLA_SDAHOLD_OFF  = 0 ; hold time is off
@@ -22,9 +25,15 @@
 .EQU TWI_CTRLA_SDAHOLD_300N = 2 ; hold time 300 ns
 .EQU TWI_CTRLA_SDAHOLD_500N = 3 ; hold time 500 ns
 
+; CTRLA - SDA Hold Time - Group Position
+.EQU TWI_CTRLA_SDAHOLD_GPOS = TWI_SDAHOLD_gp
+
 ; CTRLA - Fast Mode Plus Enable
 .EQU TWI_CTRLA_FMPEN_OFF = 0
 .EQU TWI_CTRLA_FMPEN_ON  = 1
+
+; CTRLA - Fast Mode Plus Enable - Bit Position
+.EQU TWI_CTRLA_FMPEN_BPOS = TWI_FMPEN_bp
 
 ;**********************************************************************************************;
 ; @section : MCTRLA - Host Control A                                                           ;
@@ -34,13 +43,22 @@
 .EQU TWI_MCTRLA_RIEN_OFF = 0
 .EQU TWI_MCTRLA_RIEN_ON  = 1
 
+; MCTRLA - Read Interrupt Enable - Bit Position
+.EQU TWI_MCTRLA_RIEN_BPOS = TWI_RIEN_bp
+
 ; MCTRLA - Write Interrupt Enable
 .EQU TWI_MCTRLA_WIEN_OFF = 0
 .EQU TWI_MCTRLA_WIEN_ON  = 1
 
+; MCTRLA - Write Interrupt Enable - Bit Position
+.EQU TWI_MCTRLA_WIEN_BPOS = TWI_WIEN_bp
+
 ; MCTRLA - Quick Command Enable
 .EQU TWI_MCTRLA_QCEN_OFF = 0
 .EQU TWI_MCTRLA_QCEN_ON  = 1
+
+; MCTRLA - Quick Command Enable - Bit Position
+.EQU TWI_MCTRLA_QCEN_BPOS = TWI_QCEN_bp
 
 ; MCTRLA - Inactive Bus Time-Out
 .EQU TWI_MCTRLA_TIMEOUT_OFF  = 0 ; bus time-out is disabled
@@ -48,13 +66,22 @@
 .EQU TWI_MCTRLA_TIMEOUT_100U = 2 ; bus time-out 100 us
 .EQU TWI_MCTRLA_TIMEOUT_200U = 3 ; bus time-out 200 us
 
+; MCTRLA - Inactive Bus Time-Out - Group Position
+.EQU TWI_MCTRLA_TIMEOUT_GPOS = TWI_TIMEOUT_gp
+
 ; MCTRLA - Smart Mode Enable
 .EQU TWI_MCTRLA_SMEN_OFF = 0
 .EQU TWI_MCTRLA_SMEN_ON  = 1
 
+; MCTRLA - Smart Mode Enable - Bit Position
+.EQU TWI_MCTRLA_SMEN_BPOS = TWI_SMEN_bp
+
 ; MCTRLA - Host Enable
 .EQU TWI_MCTRLA_ENABLE_OFF = 0
 .EQU TWI_MCTRLA_ENABLE_ON  = 1
+
+; MCTRLA - Host Enable - Bit Position
+.EQU TWI_MCTRLA_ENABLE_BPOS = TWI_ENABLE_bp
 
 ;**********************************************************************************************;
 ; @section : MCTRLB - Host Control B                                                           ;

@@ -9,7 +9,7 @@
 ; @section : Include File                                                                      ;
 ;**********************************************************************************************;
 
-.INCLUDE "twi/define/twi-register.inc"
+.INCLUDE "peripheral/twi/define/twi-register.inc"
 
 .INCLUDE "macro/registers.inc"
 .INCLUDE "macro/config.inc"

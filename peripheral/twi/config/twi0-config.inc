@@ -1,4 +1,4 @@
-.INCLUDE "twi/define/twi-define.inc"
+.INCLUDE "peripheral/twi/define/twi-define.inc"
 
 ;**
 ;** @brief  SDA Setup Time

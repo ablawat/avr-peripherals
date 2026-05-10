@@ -6,8 +6,8 @@
 ; @section : Include File                                                                      ;
 ;**********************************************************************************************;
 
-.INCLUDE "twi/config/twi0-config.inc"
-.INCLUDE "twi/source/twi-typedef.inc"
+.INCLUDE "config/twi/twi0-config.inc"
+.INCLUDE "peripheral/twi/source/twi-typedef.inc"
 
 ;**********************************************************************************************;
 ; @section : Register Configuration                                                            ;
@@ -23,9 +23,9 @@
 .EQU CONFIG_TWI0_CTRLA_FMPEN    = CONFIG_TWI0_FAST_MODE_PLUS
 
 ; @brief Control A Register
-.EQU CONFIG_TWI0_CTRLA = (CONFIG_TWI0_CTRLA_SDASETUP << TWI_SDASETUP_bp) | \
-                         (CONFIG_TWI0_CTRLA_SDAHOLD  << TWI_SDAHOLD_gp ) | \
-                         (CONFIG_TWI0_CTRLA_FMPEN    << TWI_FMPEN_bp   )
+.EQU CONFIG_TWI0_CTRLA = (CONFIG_TWI0_CTRLA_SDASETUP << TWI_CTRLA_SDASETUP_BPOS) | \
+                         (CONFIG_TWI0_CTRLA_SDAHOLD  << TWI_CTRLA_SDAHOLD_GPOS ) | \
+                         (CONFIG_TWI0_CTRLA_FMPEN    << TWI_CTRLA_FMPEN_BPOS   )
 
 ; MCTRLA - Read Interrupt Enable
 .EQU CONFIG_TWI0_MCTRLA_RIEN = CONFIG_TWI0_READ_INTERRUPT
@@ -46,12 +46,12 @@
 .EQU CONFIG_TWI0_MCTRLA_ENABLE = TWI_MCTRLA_ENABLE_OFF
 
 ; @brief Host Control A Register
-.EQU CONFIG_TWI0_MCTRLA = (CONFIG_TWI0_MCTRLA_RIEN    << TWI_RIEN_bp   ) | \
-                          (CONFIG_TWI0_MCTRLA_WIEN    << TWI_WIEN_bp   ) | \
-                          (CONFIG_TWI0_MCTRLA_QCEN    << TWI_QCEN_bp   ) | \
-                          (CONFIG_TWI0_MCTRLA_TIMEOUT << TWI_TIMEOUT_gp) | \
-                          (CONFIG_TWI0_MCTRLA_SMEN    << TWI_SMEN_bp   ) | \
-                          (CONFIG_TWI0_MCTRLA_ENABLE  << TWI_ENABLE_bp )
+.EQU CONFIG_TWI0_MCTRLA = (CONFIG_TWI0_MCTRLA_RIEN    << TWI_MCTRLA_RIEN_BPOS   ) | \
+                          (CONFIG_TWI0_MCTRLA_WIEN    << TWI_MCTRLA_WIEN_BPOS   ) | \
+                          (CONFIG_TWI0_MCTRLA_QCEN    << TWI_MCTRLA_QCEN_BPOS   ) | \
+                          (CONFIG_TWI0_MCTRLA_TIMEOUT << TWI_MCTRLA_TIMEOUT_GPOS) | \
+                          (CONFIG_TWI0_MCTRLA_SMEN    << TWI_MCTRLA_SMEN_BPOS   ) | \
+                          (CONFIG_TWI0_MCTRLA_ENABLE  << TWI_MCTRLA_ENABLE_BPOS )
 
 ; comment
 .EQU TWI0_TIME_RISE_DIV = (TWI_ONE_SECOND_IN_NS / CONFIG_TWI0_BUS_RISE_TIME)
