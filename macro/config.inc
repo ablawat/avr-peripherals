@@ -15,4 +15,6 @@
 #define GET_CONFIG_BYTE2(value) (LOW (HWRD(value)))
 #define GET_CONFIG_BYTE3(value) (HIGH(HWRD(value)))
 
+#define TCB_CAPTURE_ISR_NAME(NUMBER) tcb ## NUMBER ## _capture_isr
+
 .ENDIF

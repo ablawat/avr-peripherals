@@ -31,58 +31,58 @@ portb_config:   .DB CONFIG_PORTB_DIR, CONFIG_PORTB_OUT
 ;**********************************************************************************************;
 ; @brief    : Initializes Input and Output Pins Peripheral (PORT)
 ;
-; @param    : ARG1  :  2-bit - [PORTA, PORTB, PORTC]
+; @param    : ARG0  :  2-bit - [PORTA, PORTB, PORTC]
 ; @return   : none
 ;
-; @use      : ZH:ZL XH:XL TEMPH:TEMPL r1 r0
+; @use      : ZH:ZL XH:XL TEMP1:TEMP0 RESH:RESL
 ;**********************************************************************************************;
 port_init:      ; get I/O ports base address
                 ldi     XH, HIGH (PORTA_base)
                 ldi     XL, LOW  (PORTA_base)
 
                 ; calculate selected PORT address offset
-                ldi     TEMPL, PORT_OFFSET
-                mul     ARG1, TEMPL
+                ldi     TEMP0, PORT_OFFSET
+                mul     ARG0, TEMP0
 
                 ; calculate selected PORT address base
-                add     XL, r0
-                adc     XH, r1
+                add     XL, RESL
+                adc     XH, RESH
 
                 ; configure register PINnCTRL
                 ldi     ZH, HIGH (PORT_CONFIG_ADDRESS)
                 ldi     ZL, LOW  (PORT_CONFIG_ADDRESS)
 
                 ; calculate selected PORT config flash address offset
-                ldi     TEMPL, PORT_CONFIG_OFFSET
-                mul     ARG1, TEMPL
+                ldi     TEMP0, PORT_CONFIG_OFFSET
+                mul     ARG0, TEMP0
 
                 ; calculate selected PORT config flash address base
-                add     ZL, r0
-                adc     ZH, r1
+                add     ZL, RESL
+                adc     ZH, RESH
 
                 ; configure register DIR
-                lpm     TEMPL, Z+                       ; load configuration from flash
-                st      X, TEMPL                        ; write into register
+                lpm     TEMP0, Z+                       ; load configuration from flash
+                st      X, TEMP0                        ; write into register
 
                 ; move to next register
                 adiw    XL, 4                           ; move pointer forward
 
                 ; configure register OUT
-                lpm     TEMPL, Z+                       ; load configuration from flash
-                st      X, TEMPL                        ; write into register
+                lpm     TEMP0, Z+                       ; load configuration from flash
+                st      X, TEMP0                        ; write into register
 
                 ; move to next register
                 adiw    XL, 12                          ; move pointer forward
 
                 ; prepare for registers configuration
-                ldi     TEMPL, 8                        ; set number of PINnCTRL registers
+                ldi     TEMP0, 8                        ; set number of PINnCTRL registers
 
 port_init_br1:  ; configure register PINnCTRL
-                lpm     TEMPH, Z+                       ; read config from flash
-                st      X+, TEMPH                       ; write into PINCTRL
+                lpm     TEMP1, Z+                       ; read config from flash
+                st      X+, TEMP1                       ; write into PINCTRL
 
                 ; check for last register to write
-                dec     TEMPL                           ; decrease number of registers
+                dec     TEMP0                           ; decrease number of registers
                 brne    port_init_br1                   ; repeat when not all registers has been set
 
                 ret

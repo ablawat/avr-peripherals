@@ -8,7 +8,7 @@
 
 .INCLUDE "peripheral/clkctrl/define/clkctrl-register.inc"
 
-.INCLUDE "macro/registers.inc"
+.INCLUDE "macro/register.inc"
 .INCLUDE "macro/config.inc"
 
 ;**********************************************************************************************;

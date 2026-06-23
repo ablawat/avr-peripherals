@@ -66,10 +66,10 @@ usart1_config:  .DB CONFIG_USART1_CTRLA, CONFIG_USART1_CTRLB
 ;**********************************************************************************************;
 ; @brief    : Initializes Peripheral Registers
 ;
-; @param    : ARG1  :  2-bit - [USART0, USART1]
+; @param    : ARG0  :  2-bit - [USART0, USART1]
 ; @return   : none
 ;
-; @use      : ZH:ZL YH:YL TEMPH:TEMPL
+; @use      : ZH:ZL YH:YL TEMP1:TEMP0
 ;**********************************************************************************************;
 usart_init:     ; get selected instance base address
                 rcall   usart_base_addr
@@ -82,54 +82,54 @@ usart_init:     ; get selected instance base address
                 ldi     ZL, LOW  (USART_CONFIG_ADDRESS)
 
                 ; get configuration map
-                ldi     TEMPL, USART_CONFIG_MAP         ; get instance config flags
+                ldi     TEMP0, USART_CONFIG_MAP         ; get instance config flags
 
 usart_init_br1: ; check for last configuration
-                cpi     ARG1, 0                         ; check instance number
+                cpi     ARG0, 0                         ; check instance number
                 breq    usart_init_br3                  ; finish when instance is first
 
                 ; check instance bit inside map
-                lsr     TEMPL                           ; shift out bit 0
+                lsr     TEMP0                           ; shift out bit 0
                 brcc    usart_init_br2                  ; when it is cleared
 
                 ; set pointer at next configuration instance
                 adiw    ZL, USART_CONFIG_OFFSET         ; move address one instance forward
 
 usart_init_br2: ; move to next configuration
-                dec     ARG1                            ; decrease instance number
+                dec     ARG0                            ; decrease instance number
                 rjmp    usart_init_br1                  ; repeat for lower instance
 
 usart_init_br3: ; prepare for registers configuration
-                ldi     TEMPL, 3                        ; set number of CTRLx registers
+                ldi     TEMP0, 3                        ; set number of CTRLx registers
 
 usart_init_br4: ; configure register CTRLx
-                lpm     TEMPH, Z+                       ; load configuration from flash
-                st      Y+, TEMPH                       ; write into register
+                lpm     TEMP1, Z+                       ; load configuration from flash
+                st      Y+, TEMP1                       ; write into register
 
                 ; check for last register to write
-                dec     TEMPL                           ; decrease number of registers
+                dec     TEMP0                           ; decrease number of registers
                 brne    usart_init_br4                  ; repeat when not all registers has been set
 
                 ; move to next register
                 adiw    ZL, 1                           ; move pointer forward
 
                 ; configure register BAUDL
-                lpm     TEMPL, Z+                       ; load configuration from flash
-                st      Y+, TEMPL                       ; write into register
+                lpm     TEMP0, Z+                       ; load configuration from flash
+                st      Y+, TEMP0                       ; write into register
 
                 ; configure register BAUDH
-                lpm     TEMPL, Z+                       ; load configuration from flash
-                st      Y+, TEMPL                       ; write into register
+                lpm     TEMP0, Z+                       ; load configuration from flash
+                st      Y+, TEMP0                       ; write into register
 
                 ret
 
 ;**********************************************************************************************;
 ; @brief    : Enables Transmitter and Receiver
 ;
-; @param    : ARG1  :  2-bit - [USART0, USART1]
+; @param    : ARG0  :  2-bit - [USART0, USART1]
 ; @return   : none
 ;
-; @use      : YH:YL TEMPL
+; @use      : YH:YL TEMP0
 ;**********************************************************************************************;
 usart_enable:   ; get selected instance base address
                 rcall   usart_base_addr
@@ -138,22 +138,22 @@ usart_enable:   ; get selected instance base address
                 adiw    YL, USART_CTRLB_offset      ; move address forward
 
                 ; enable transmitter and receiver
-                ld      TEMPL, Y                    ; get control B register
-                sbr     TEMPL, USART_RXTX_ENABLE    ; enable
-                st      Y, TEMPL                    ; set control B register
+                ld      TEMP0, Y                    ; get control B register
+                sbr     TEMP0, USART_RXTX_ENABLE    ; enable
+                st      Y, TEMP0                    ; set control B register
 
                 ret
 
 ;**********************************************************************************************;
 ; @brief    : Sends Data Bytes
 ;
-; @param    : ARG1  :  2-bit - [USART0, USART1]
-; @param    : ARG2  :  8-bit - a length of data to send
+; @param    : ARG0  :  2-bit - [USART0, USART1]
+; @param    : ARG1  :  8-bit - a length of data to send
 ; @param    : XH:XL : 16-bit - a start pointer of data to send
 ;
 ; @return   : none
 ;
-; @use      : YH:YL TEMPL
+; @use      : YH:YL TEMP0
 ;**********************************************************************************************;
 usart_write:        ; get selected instance base address
                     rcall   usart_base_addr
@@ -162,27 +162,27 @@ usart_write:        ; get selected instance base address
                     adiw    YL, USART_STATUS_offset     ; move address forward
 
 usart_write_br1:    ; wait until byte has been sent
-                    ld      TEMPL, Y                    ; get status
-                    sbrs    TEMPL, USART_DREIF_BPOS     ; check data register empty interrupt flag
+                    ld      TEMP0, Y                    ; get status
+                    sbrs    TEMP0, USART_DREIF_BPOS     ; check data register empty interrupt flag
                     rjmp    usart_write_br1             ; repeat when data register is not empty
 
                     ; set pointer at transmit data register low
                     sbiw    YL, 2                       ; move address backward
 
                     ; send byte
-                    ld      TEMPL, X+                   ; read data byte from input pointer
-                    st      Y, TEMPL                    ; write byte and trigger transmission
+                    ld      TEMP0, X+                   ; read data byte from input pointer
+                    st      Y, TEMP0                    ; write byte and trigger transmission
 
                     ; set pointer at status register
                     adiw    YL, 2                       ; move address forward
 
                     ; check for last byte to send
-                    dec     ARG2                        ; decrease number of bytes to send
+                    dec     ARG1                        ; decrease number of bytes to send
                     brne    usart_write_br1             ; repeat when not all bytes has been sent
 
 usart_write_br2:    ; wait until last byte has been sent
-                    ld      TEMPL, Y                    ; get status
-                    sbrs    TEMPL, USART_TXCIF_BPOS     ; check transmit complete interrupt flag
+                    ld      TEMP0, Y                    ; get status
+                    sbrs    TEMP0, USART_TXCIF_BPOS     ; check transmit complete interrupt flag
                     rjmp    usart_write_br2             ; repeat when transmit is not completed
 
                     ret
@@ -190,13 +190,13 @@ usart_write_br2:    ; wait until last byte has been sent
 ;**********************************************************************************************;
 ; @brief    : Receives Data Bytes
 ;
-; @param    : ARG1  :  2-bit - [USART0, USART1]
-; @param    : ARG2  :  8-bit - a length of data to receive
+; @param    : ARG0  :  2-bit - [USART0, USART1]
+; @param    : ARG1  :  8-bit - a length of data to receive
 ; @param    : XH:XL : 16-bit - a start pointer of data to receive
 ;
-; @return   : DS(X) : memory of length ARG2
+; @return   : DS(X) : memory of length ARG1
 ;
-; @use      : YH:YL TEMPL
+; @use      : YH:YL TEMP0
 ;**********************************************************************************************;
 usart_read:         ; get selected instance base address
                     rcall   usart_base_addr
@@ -205,22 +205,22 @@ usart_read:         ; get selected instance base address
                     adiw    YL, USART_STATUS_offset     ; move address forward
 
 usart_read_br1:     ; wait until byte has been received
-                    ld      TEMPL, Y                    ; get status
-                    sbrs    TEMPL, USART_RXCIF_BPOS     ; check receive complete interrupt flag
+                    ld      TEMP0, Y                    ; get status
+                    sbrs    TEMP0, USART_RXCIF_BPOS     ; check receive complete interrupt flag
                     rjmp    usart_read_br1              ; repeat when byte is not received
 
                     ; set pointer at receiver data register low
                     sbiw    YL, 4                       ; move address backward
 
                     ; read received byte
-                    ld      TEMPL, Y                    ; get data byte
-                    st      X+, TEMPL                   ; store byte at output pointer
+                    ld      TEMP0, Y                    ; get data byte
+                    st      X+, TEMP0                   ; store byte at output pointer
 
                     ; set pointer at status register
                     adiw    YL, 4                       ; move address forward
 
                     ; check for last byte to receive
-                    dec     ARG2                        ; decrease number of bytes to receive
+                    dec     ARG1                        ; decrease number of bytes to receive
                     brne    usart_read_br1              ; repeat when not all bytes has been received
 
                     ret
@@ -228,21 +228,21 @@ usart_read_br1:     ; wait until byte has been received
 ;**********************************************************************************************;
 ; @brief    : Calculates Instance Base Address
 ;
-; @param    : ARG1  :  2-bit - [USART0, USART1]
+; @param    : ARG0  :  2-bit - [USART0, USART1]
 ; @return   : YH:YL : 16-bit - USART base address
 ;
-; @use      : TEMPL r1 r0
+; @use      : TEMP0 RESH:RESL
 ;**********************************************************************************************;
 usart_base_addr:    ; get first instance base address
                     ldi     YH, HIGH (USART0_RXDATAL)
                     ldi     YL, LOW  (USART0_RXDATAL)
 
                     ; calculate selected instance address offset
-                    ldi     TEMPL, USART_OFFSET
-                    mul     ARG1, TEMPL
+                    ldi     TEMP0, USART_OFFSET
+                    mul     ARG0, TEMP0
 
                     ; calculate selected instance address base
-                    add     YL, r0 
-                    adc     YH, r1 
+                    add     YL, RESL
+                    adc     YH, RESH
 
                     ret

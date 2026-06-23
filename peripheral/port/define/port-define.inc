@@ -11,7 +11,7 @@
 
 .INCLUDE "peripheral/port/define/port-register.inc"
 
-.INCLUDE "macro/registers.inc"
+.INCLUDE "macro/register.inc"
 .INCLUDE "macro/config.inc"
 
 ;**********************************************************************************************;

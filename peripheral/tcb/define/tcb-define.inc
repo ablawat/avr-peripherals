@@ -11,7 +11,7 @@
 
 .INCLUDE "peripheral/tcb/define/tcb-register.inc"
 
-.INCLUDE "macro/registers.inc"
+.INCLUDE "macro/register.inc"
 .INCLUDE "macro/config.inc"
 
 ;******************************************************************************************************************************;
@@ -97,8 +97,5 @@
 ; @brief Timer/Counter B - Capture Interrupt Enable
 .EQU TCB_CAPTURE_INTERRUPT_DISABLED = TCB_INTCTRL_CAPT_OFF
 .EQU TCB_CAPTURE_INTERRUPT_ENABLED  = TCB_INTCTRL_CAPT_ON
-
-; @brief Timer/Counter B - Capture Interrupt Service Routine
-.EQU TCB_CAPTURE_ISR_NONE = 0
 
 .ENDIF

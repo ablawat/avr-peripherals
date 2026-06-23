@@ -14,30 +14,30 @@
 ; @input    : none
 ; @output   : none
 ;
-; @use      : XH:XL, TEMPL
+; @use      : XH:XL, TEMP0
 ;**********************************************************************************************;
 tcb0_init:  ; get TCB0 base address
             ldi     XH, HIGH (TCB0_base)
             ldi     XL, LOW  (TCB0_base)
 
             ; configure register Control A
-            ldi     TEMPL, CONFIG_TCB0_CTRLA    ; get config constant
-            st      X+, TEMPL                   ; write into register
+            ldi     TEMP0, CONFIG_TCB0_CTRLA    ; get config constant
+            st      X+, TEMP0                   ; write into register
 
             ; configure register Control B
-            ldi     TEMPL, CONFIG_TCB0_CTRLB    ; get config constant
-            st      X+, TEMPL                   ; write into register
+            ldi     TEMP0, CONFIG_TCB0_CTRLB    ; get config constant
+            st      X+, TEMP0                   ; write into register
 
             ; skip two registers
             adiw    XL, 2                       ; move pointer forward
 
             ; configure register Event Control
-            ldi     TEMPL, CONFIG_TCB0_EVCTRL   ; get config constant
-            st      X+, TEMPL                   ; write into register
+            ldi     TEMP0, CONFIG_TCB0_EVCTRL   ; get config constant
+            st      X+, TEMP0                   ; write into register
 
             ; configure register Interrupt Control
-            ldi     TEMPL, CONFIG_TCB0_INTCTRL  ; get config constant
-            st      X+, TEMPL                   ; write into register
+            ldi     TEMP0, CONFIG_TCB0_INTCTRL  ; get config constant
+            st      X+, TEMP0                   ; write into register
 
             ret
 
@@ -47,12 +47,12 @@ tcb0_init:  ; get TCB0 base address
 ; @input    : none
 ; @output   : none
 ;
-; @use      : TEMPL
+; @use      : TEMP0
 ;**********************************************************************************************;
 tcb0_enable:    ; enable timer
-                lds     TEMPL, TCB0_CTRLA           ; get Control A
-                sbr     TEMPL, TCB_CTRLA_ENABLE_ON  ; enable counter
-                sts     TCB0_CTRLA, TEMPL           ; set Control A
+                lds     TEMP0, TCB0_CTRLA           ; get Control A
+                sbr     TEMP0, TCB_CTRLA_ENABLE_ON  ; enable counter
+                sts     TCB0_CTRLA, TEMP0           ; set Control A
 
                 ret
 
@@ -60,25 +60,25 @@ tcb0_enable:    ; enable timer
 ; @brief    : Reads Measured Pulse Widths
 ;
 ; @input    : XH:XL : 16-bit - a start pointer of data to receive
-; @input    : ARG1  :  8-bit - a length of data to receive
+; @input    : ARG0  :  8-bit - a length of data to receive
 ;
-; @use      : TEMPL
+; @use      : TEMP0
 ;**********************************************************************************************;
 tcb0_read_width:    ; wait until measurement is completed
-                    lds     TEMPL, TCB0_INTFLAGS            ; get interrupt flags
-                    sbrs    TEMPL, TCB_INTFLAGS_CAPT_BPOS   ; check capture interrupt flag
+                    lds     TEMP0, TCB0_INTFLAGS            ; get interrupt flags
+                    sbrs    TEMP0, TCB_INTFLAGS_CAPT_BPOS   ; check capture interrupt flag
                     rjmp    tcb0_read_width                 ; repeat when measurement is not completed
 
                     ; read measurement result low byte
-                    lds     TEMPL, TCB0_CCMPL               ; get data low byte
-                    st      X+, TEMPL                       ; store data at output pointer
+                    lds     TEMP0, TCB0_CCMPL               ; get data low byte
+                    st      X+, TEMP0                       ; store data at output pointer
 
                     ; read measurement result high byte
-                    lds     TEMPL, TCB0_CCMPH               ; get data high byte
-                    st      X+, TEMPL                       ; store data at output pointer
+                    lds     TEMP0, TCB0_CCMPH               ; get data high byte
+                    st      X+, TEMP0                       ; store data at output pointer
 
                     ; check for last result to read
-                    dec     ARG1                            ; decrease number of results to read
+                    dec     ARG0                            ; decrease number of results to read
                     brne    tcb0_read_width                 ; repeat when not all results have been read
 
                     ret
